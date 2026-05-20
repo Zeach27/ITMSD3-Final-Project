@@ -1,11 +1,10 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -15,21 +14,30 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
+        tabBarStyle: { backgroundColor: '#1C1C1E', borderTopColor: '#38383A', height: 60, paddingBottom: 8 },
+        tabBarInactiveTintColor: '#8E8E93',
       }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
-}
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Canvas',
+            tabBarIcon: ({ color }) => <MaterialCommunityIcons size={24} name="palette" color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="gallery"
+          options={{
+            title: 'Gallery',
+            tabBarIcon: ({ color }) => <MaterialCommunityIcons size={24} name="image-multiple" color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            title: 'Settings',
+            tabBarIcon: ({ color }) => <MaterialCommunityIcons size={24} name="cog" color={color} />,
+          }}
+        />
+        </Tabs>
+        );
+        }
