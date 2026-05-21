@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   track: { backgroundColor: '#3A3A3C', borderRadius: 4, position: 'relative', overflow: 'visible' },
   trackHorizontal: { width: '100%', height: 6 },
   trackVertical: { width: 6, height: 80 },
-  fill: { backgroundColor: '#5856D6', borderRadius: 4, position: 'absolute', bottom: 0 },
+  fill: { backgroundColor: '#2F70F2', borderRadius: 4, position: 'absolute', bottom: 0 },
   knob: {
     position: 'absolute', width: 20, height: 20, borderRadius: 10,
     backgroundColor: '#FFFFFF', marginLeft: -7, marginTop: -7, top: 3,

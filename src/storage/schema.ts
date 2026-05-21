@@ -14,7 +14,6 @@ export interface ArtworkRecord {
 export const DEFAULT_PREFERENCES: UserPreferences = {
   defaultBrushSize: 10,
   defaultColor: '#5856D6',
-  theme: 'dark',
   pressureSensitivity: 0.5,
   autoSaveInterval: 30,
 };

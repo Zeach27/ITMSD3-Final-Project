@@ -60,7 +60,35 @@ describe('BrushEngine', () => {
       { x: 10, y: 10, time: 50 },
     ];
 
-    const types: Array<'pencil' | 'ink' | 'watercolor' | 'marker'> = ['pencil', 'ink', 'watercolor', 'marker'];
+    const types: Array<
+      | 'pencil'
+      | 'ink'
+      | 'watercolor'
+      | 'marker'
+      | 'syrup'
+      | 'thylacine'
+      | 'fineTip'
+      | 'technicalPen'
+      | 'gelPen'
+      | 'inkBleed'
+      | 'studioPen'
+      | 'dryInk'
+      | 'gesinskiInk'
+    > = [
+      'pencil',
+      'ink',
+      'watercolor',
+      'marker',
+      'syrup',
+      'thylacine',
+      'fineTip',
+      'technicalPen',
+      'gelPen',
+      'inkBleed',
+      'studioPen',
+      'dryInk',
+      'gesinskiInk',
+    ];
     for (const brushType of types) {
       const result = BrushEngine.generateStroke(points, brushType);
       expect(result.pathString).toBeTruthy();

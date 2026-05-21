@@ -5,7 +5,20 @@ export interface Point {
   time?: number;
 }
 
-export type BrushType = 'pencil' | 'ink' | 'watercolor' | 'marker';
+export type BrushType =
+  | 'pencil'
+  | 'ink'
+  | 'watercolor'
+  | 'marker'
+  | 'syrup'
+  | 'thylacine'
+  | 'fineTip'
+  | 'technicalPen'
+  | 'gelPen'
+  | 'inkBleed'
+  | 'studioPen'
+  | 'dryInk'
+  | 'gesinskiInk';
 export type BlendMode = 'normal' | 'multiply' | 'screen' | 'overlay';
 export type Tool = 'brush' | 'eraser' | 'selection' | 'move' | 'eyedropper';
 
@@ -42,7 +55,6 @@ export interface CanvasTransform {
 export interface UserPreferences {
   defaultBrushSize: number;
   defaultColor: string;
-  theme: 'dark' | 'light';
   pressureSensitivity: number;
   autoSaveInterval: number;
 }

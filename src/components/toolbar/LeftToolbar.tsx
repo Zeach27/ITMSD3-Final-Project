@@ -102,5 +102,5 @@ const styles = StyleSheet.create({
     width: 44, height: 44, borderRadius: 12,
     alignItems: 'center', justifyContent: 'center',
   },
-  toolButtonActive: { backgroundColor: '#5856D6' },
+  toolButtonActive: { backgroundColor: '#2F70F2' },
 });

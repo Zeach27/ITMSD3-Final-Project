@@ -207,7 +207,7 @@ export default function GalleryScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#1C1C1E', paddingTop: 50 },
+  container: { flex: 1, paddingTop: 50 },
   header: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
     paddingHorizontal: 16, paddingBottom: 12,

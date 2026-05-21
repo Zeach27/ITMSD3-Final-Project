@@ -16,7 +16,7 @@ export function RightToolbar() {
     <View style={styles.container} pointerEvents="box-none">
       <View style={styles.toolbar}>
         <Pressable onPress={() => setActivePanel(activePanel === 'color' ? 'none' : 'color')} style={styles.swatchButton}>
-          <View style={[styles.swatch, { backgroundColor: state.currentColor, borderColor: activePanel === 'color' ? '#5856D6' : '#555' }]} />
+          <View style={[styles.swatch, { backgroundColor: state.currentColor, borderColor: activePanel === 'color' ? '#2F70F2' : '#555' }]} />
         </Pressable>
         <Pressable onPress={() => setActivePanel(activePanel === 'size' ? 'none' : 'size')} style={[styles.sizeButton, activePanel === 'size' && styles.sizeButtonActive]}>
           <MaterialCommunityIcons name="format-size" size={20} color="#FFFFFF" />
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     width: 36, height: 36, borderRadius: 18,
     backgroundColor: 'rgba(255, 255, 255, 0.05)', alignItems: 'center', justifyContent: 'center',
   },
-  sizeButtonActive: { backgroundColor: '#5856D6' },
+  sizeButtonActive: { backgroundColor: '#2F70F2' },
   panelTitle: { fontSize: 13, fontWeight: 'bold', color: '#FFFFFF', marginBottom: 12 },
   panel: {
     marginTop: 10,

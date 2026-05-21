@@ -9,6 +9,7 @@ import { screenToCanvas } from '@/src/engine/gestures/CoordinateTransform';
 import { mapPinchCenter } from '@/src/engine/gestures/PinchHandler';
 import { translateTransform } from '@/src/engine/gestures/PanHandler';
 import { BrushEngine } from '@/src/engine/brushes/BrushEngine';
+import { getBrushRenderConfig } from '@/src/engine/brushes/brushStyles';
 import { DrawCommand } from '@/src/engine/commands/DrawCommand';
 import { EraseCommand } from '@/src/engine/commands/EraseCommand';
 import { Stroke, Point } from '@/src/state/types';
@@ -203,7 +204,7 @@ function splitStrokeByEraserPath(stroke: Stroke, eraserPoints: Point[], eraserSi
           ...stroke,
           id: generateUniqueId('stroke'),
           points: currentPts,
-          smoothedPath: BrushEngine.generateStroke(currentPts, stroke.brushType).pathString,
+          smoothedPath: BrushEngine.generateStroke(currentPts, stroke.brushType, stroke.brushSize).pathString,
         });
         currentPts = [];
       }
@@ -215,7 +216,7 @@ function splitStrokeByEraserPath(stroke: Stroke, eraserPoints: Point[], eraserSi
       ...stroke,
       id: generateUniqueId('stroke'),
       points: currentPts,
-      smoothedPath: BrushEngine.generateStroke(currentPts, stroke.brushType).pathString,
+      smoothedPath: BrushEngine.generateStroke(currentPts, stroke.brushType, stroke.brushSize).pathString,
     });
   }
 
@@ -243,8 +244,8 @@ export function DrawingCanvas() {
   } = useCanvas();
 
   const [canvasLayout, setCanvasLayout] = useState({ x: 0, y: 0, width: 0, height: 0 });
-  const viewShotRef = useRef<ViewShot>(null);
-  const canvasRef = useRef<View>(null);
+  const viewShotRef = useRef<any>(null);
+  const canvasRef = useRef<any>(null);
   const [previewPath, setPreviewPath] = useState<string | null>(null);
   const [eraserPoint, setEraserPoint] = useState<Point | null>(null);
   const [eraserPreviewPath, setEraserPreviewPath] = useState<string | null>(null);
@@ -262,6 +263,11 @@ export function DrawingCanvas() {
     if (canvasLayout.width === 0) return CANVAS_HEIGHT;
     return (canvasLayout.height / canvasLayout.width) * CANVAS_WIDTH;
   }, [canvasLayout.width, canvasLayout.height]);
+
+  const previewStyle = useMemo(
+    () => getBrushRenderConfig(state.brushType, state.brushSize, state.brushOpacity),
+    [state.brushType, state.brushSize, state.brushOpacity],
+  );
 
   useEffect(() => {
     transformRef.current = state.transform;
@@ -304,7 +310,7 @@ export function DrawingCanvas() {
       return;
     }
 
-    const { pathString, points: preparedPoints } = BrushEngine.generateStroke(points, state.brushType);
+    const { pathString, points: preparedPoints } = BrushEngine.generateStroke(points, state.brushType, state.brushSize);
     const stroke: Stroke = {
       id: generateUniqueId('stroke'),
       layerId: activeLayer.id,
@@ -414,7 +420,7 @@ export function DrawingCanvas() {
         if (state.activeTool === 'brush') {
           pendingPointsRef.current = [...pendingPointsRef.current, { ...point, pressure: 1, time: now }];
           if (pendingPointsRef.current.length >= 2) {
-            const { pathString } = BrushEngine.generateStroke(pendingPointsRef.current, state.brushType);
+            const { pathString } = BrushEngine.generateStroke(pendingPointsRef.current, state.brushType, state.brushSize);
             setPreviewPath(pathString);
           }
         } else if (state.activeTool === 'eraser') {
@@ -484,21 +490,10 @@ export function DrawingCanvas() {
                 {previewPath && state.activeTool === 'brush' && (
                   <Path
                     d={previewPath}
-                    stroke={state.currentColor}
-                    strokeWidth={state.brushType === 'watercolor' ? state.brushSize * 1.2 : state.brushSize}
-                    strokeOpacity={
-                      state.brushType === 'watercolor' ? Math.min(state.brushOpacity, 0.4) :
-                      state.brushType === 'marker' ? Math.min(state.brushOpacity, 0.6) :
-                      state.brushOpacity
-                    }
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    filter={
-                      state.brushType === 'pencil' ? 'url(#pencilTexture)' :
-                      state.brushType === 'watercolor' ? 'url(#watercolorSoft)' :
-                      undefined
-                    }
+                    fill={state.currentColor}
+                    fillOpacity={previewStyle.strokeOpacity}
+                    stroke="none"
+                    filter={previewStyle.filter}
                   />
                 )}
                 {eraserPreviewPath && state.activeTool === 'eraser' && (
@@ -539,5 +534,4 @@ export function DrawingCanvas() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#1C1C1E' },
-  gestureContainer: { flex: 1 },
 });
